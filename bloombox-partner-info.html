@@ -19,6 +19,10 @@
       :host {
         display: block;
       }
+
+      :host paper-card {
+        min-width: 650px;
+      };
     </style>
 
     <paper-card heading="Organization" class="organization-card">
@@ -26,7 +30,7 @@
         <paper-input id="orgAccountID" disabled label="Account ID" value="[[account]]"></paper-input>
         <paper-input id="orgSimpleName" disabled label="Name" value="[[label]]"></paper-input>
         <paper-input id="orgLegalName" disabled label="Legal Name" value="[[legal]]"></paper-input>
-        <paper-input id="orgEIN" disabled label="Federal Tax ID" value="[[einValue()]]"></paper-input>
+        <paper-input id="orgEIN" disabled label="Federal Tax ID" value="[[_maskedEIN]]"></paper-input>
       </div><!-- end div.card-content -->
     </paper-card><!-- end paper-card.organization-card -->
   </template>
@@ -37,6 +41,17 @@
       is: 'bloombox-partner-info',
 
       properties: {
+        /**
+         * Small utility property that formats an EIN value such that most of the
+         * digits are masked.
+         */
+        _maskedEIN: {
+          type: String,
+          notify: true,
+          readOnly: true,
+          computed: '_computeMaskedEIN(ein)'
+        },
+
         /**
          * Short string code uniquely identifying this partner. Used in URLs, database
          * references, and other important places.
@@ -85,6 +100,15 @@
           notify: true,
           reflectToAttribute: true
         }
+      },
+
+      /**
+       * Compute a formatted + masked EIN value for display on the dashboard.
+       */
+      _computeMaskedEIN: function(ein) {
+        if (ein != null && ein != undefined && ein.length)
+          return "**-***" + ein.substr(6);
+        return "N/A";
       }
     });
   </script>
