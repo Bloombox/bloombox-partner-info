@@ -12,6 +12,9 @@
     <link rel="import" href="../bloombox-partner-info.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
+      .vertical-section-container.centered {
+        max-width: 700px !important;
+      }
     </style>
   </head>
   <body>
@@ -20,7 +23,12 @@
       <h3>Basic bloombox-partner-info Demo</h3>
       <demo-snippet>
         <template>
-          <bloombox-partner-info></bloombox-partner-info>
+          <bloombox-partner-info
+            code='abatin'
+            label='Abatin Wellness'
+            account='1234-5678-ABCD'
+            ein='12-1234567'
+            legal='Abatin Wellness Center, Inc.'></bloombox-partner-info>
         </template>
       </demo-snippet>
     </div>
